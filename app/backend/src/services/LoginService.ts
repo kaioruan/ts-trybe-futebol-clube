@@ -1,5 +1,3 @@
-// import IUser from '../interface/IUser';
-// import UserModel from '../models/UserModel';
 import * as bcrypt from 'bcryptjs';
 import * as Jwt from 'jsonwebtoken';
 import IUser from '../interface/IUser';
@@ -32,7 +30,6 @@ class LoginService {
 
   public validate = async (authorization: string): Promise<IRole> => {
     const token = Jwt.verify(authorization, JWT_SECRET) as token;
-    console.log('AAAAAAAAAAa', token);
     if (token) {
       const { userId } = token;
       const result = await this.model.findOne(

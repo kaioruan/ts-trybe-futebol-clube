@@ -8,6 +8,12 @@ class TeamService {
     const Teams = await this.model.findAll();
     return Teams;
   };
+
+  public getById = async (id: string): Promise<ITeam> => {
+    const getId = await this.model.findByPk(id);
+    console.log(getId);
+    return getId as unknown as ITeam;
+  };
 }
 
 export default TeamService;
