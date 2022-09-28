@@ -10,10 +10,10 @@ const JWT_SECRET = 'jwt_secret';
 class UserService {
   public model = UserModel;
 
-  public login = async (email: string, password: string): Promise<IToken> => {
+  public login = async (email: string, password: string): Promise<unknown> => {
     const user = await this.model.findOne({ where: { email }, raw: true }) as IUser;
     if (!user) {
-      throw new Error('User not found');
+      return null;
     }
     if (!bcrypt.compareSync(password, user.password)) {
       throw new Error('Incorrect password');
