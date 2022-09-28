@@ -1,5 +1,7 @@
 import * as express from 'express';
+import LoginController from './controller/UserLogin';
 
+const loginController = new LoginController();
 class App {
   public app: express.Express;
 
@@ -10,6 +12,8 @@ class App {
 
     // Não remover essa rota
     this.app.get('/', (req, res) => res.json({ ok: true }));
+    this.app.post('/login', loginController.login);
+    this.app.put('/login', (req, res) => res.json({ ok: true }));
   }
 
   private config():void {
