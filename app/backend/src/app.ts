@@ -3,11 +3,13 @@ import TeamsController from './controller/TeamsController';
 import LoginController from './controller/UserLogin';
 import LoginValidation from './middlewares/LoginValidation';
 import MatchesController from './controller/MatchesController';
+import TokenValidation from './middlewares/TokenValidation';
 
 const loginController = new LoginController();
 const loginValidation = new LoginValidation();
 const teamsController = new TeamsController();
 const matchesController = new MatchesController();
+const tokenValidation = new TokenValidation();
 class App {
   public app: express.Express;
 
@@ -23,7 +25,7 @@ class App {
     this.app.get('/teams', teamsController.getAllTeams);
     this.app.get('/teams/:id', teamsController.getById);
     this.app.get('/matches', matchesController.getAllMatches);
-    this.app.post('/matches', matchesController.postMatches);
+    this.app.post('/matches', tokenValidation.validate, matchesController.postMatches);
     this.app.patch('/matches/:id/finish', matchesController.finishMatch);
   }
 

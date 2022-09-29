@@ -4,8 +4,6 @@ import MatchModel from '../database/models/MatchModel';
 import TeamModel from '../database/models/TeamModel';
 import postMatch from '../interface/postMatch';
 
-// const error = new Error('There is no team with such id!');
-// const error.code = 404;
 class TeamService {
   public model = MatchModel;
 
