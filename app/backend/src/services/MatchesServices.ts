@@ -1,8 +1,11 @@
+// import { StatusCodes } from 'http-status-codes';
 import Match from '../interface/Match';
 import MatchModel from '../database/models/MatchModel';
 import TeamModel from '../database/models/TeamModel';
 import postMatch from '../interface/postMatch';
 
+// const error = new Error('There is no team with such id!');
+// const error.code = 404;
 class TeamService {
   public model = MatchModel;
 
@@ -42,12 +45,20 @@ class TeamService {
     return Matches as unknown as Match[];
   };
 
-  public postMatches = async (body: postMatch): Promise<Match> => {
+  public postMatches = async (body: postMatch): Promise<Match | string> => {
+    const getId = await this.model.findByPk(body.homeTeam);
+    const secondId = await this.model.findByPk(body.awayTeam);
+    if (!getId || !secondId) {
+      return 'vasco';
+    }
     const newMatch = await this.model.create({ ...body, inProgress: true });
-
-    // return { newMatch.id, newMatch.homeTeam, newMatch.homeTeamGoals, newMatch.awayTeam, newMatch.awayTeamGoals, newMatch.inProgress };
+    if (!newMatch) return null as unknown as Match;
     const { id, homeTeam, homeTeamGoals, awayTeam, awayTeamGoals, inProgress } = newMatch;
     return { id, homeTeam, homeTeamGoals, awayTeam, awayTeamGoals, inProgress } as unknown as Match;
+  };
+
+  public finishMatch = async (id: string): Promise<void> => {
+    await this.model.update({ inProgress: false }, { where: { id } });
   };
 }
 

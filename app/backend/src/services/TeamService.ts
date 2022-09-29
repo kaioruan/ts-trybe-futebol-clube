@@ -11,6 +11,7 @@ class TeamService {
 
   public getById = async (id: string): Promise<ITeam> => {
     const getId = await this.model.findByPk(id);
+    if (!getId) return null as unknown as ITeam;
     return getId as ITeam;
   };
 }
