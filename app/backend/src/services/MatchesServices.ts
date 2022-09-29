@@ -22,6 +22,24 @@ class TeamService {
     });
     return Matches as unknown as Match[];
   };
+
+  public getBySearch = async (q: boolean): Promise<Match[]> => {
+    const Matches = await this.model.findAll({ where: { inProgress: q },
+      include: [
+        {
+          model: TeamModel,
+          as: 'teamHome',
+          attributes: { exclude: ['id'] },
+        },
+        {
+          model: TeamModel,
+          as: 'teamAway',
+          attributes: { exclude: ['id'] },
+        },
+      ],
+    });
+    return Matches as unknown as Match[];
+  };
 }
 
 export default TeamService;
