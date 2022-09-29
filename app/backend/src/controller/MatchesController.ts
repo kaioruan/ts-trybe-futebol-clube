@@ -18,6 +18,11 @@ class MatchesController {
     const allMatches = await this.matchesServices.getAllMatches();
     res.status(200).json(allMatches);
   };
+
+  public postMatches = async (req: Request, res: Response) => {
+    const newMatch = await this.matchesServices.postMatches(req.body);
+    res.status(201).json(newMatch);
+  };
 }
 
 export default MatchesController;

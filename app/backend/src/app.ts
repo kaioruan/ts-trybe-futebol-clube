@@ -23,6 +23,7 @@ class App {
     this.app.get('/teams', teamsController.getAllTeams);
     this.app.get('/teams/:id', teamsController.getById);
     this.app.get('/matches', matchesController.getAllMatches);
+    this.app.post('/matches', matchesController.postMatches);
   }
 
   private config():void {

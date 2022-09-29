@@ -1,10 +1,8 @@
 interface IUser {
-  id?: number;
+  id: number;
   name?: string;
-  email?: string;
+  email: string;
   password: string;
-  role?: string;
-  // created_at: Date;
-  // updated_at: Date;
+  role: string;
 }
 export default IUser;
