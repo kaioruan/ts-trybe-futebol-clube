@@ -14,10 +14,6 @@ const UserLogin = {
   email: 'divinesmite@critic.com',
   password: 'secret_admin',
 }
-const invalidLogin = {
-  email: 'usuario_suspeito@gmail.com',
-  password: 'secret_admin',
-}
 
 describe('Rota Login', () => {
   describe('Usuário válido', () => {
