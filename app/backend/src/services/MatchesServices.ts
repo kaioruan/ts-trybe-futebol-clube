@@ -58,6 +58,18 @@ class TeamService {
   public finishMatch = async (id: string): Promise<void> => {
     await this.model.update({ inProgress: false }, { where: { id } });
   };
+
+  public updateMatch = async (
+    id: string,
+    homeTeamGoals: number,
+    awayTeamGoals: number,
+  ): Promise<Match> => {
+    const match = await this.model.update(
+      { homeTeamGoals, awayTeamGoals },
+      { where: { id } },
+    );
+    return match as unknown as Match;
+  };
 }
 
 export default TeamService;
