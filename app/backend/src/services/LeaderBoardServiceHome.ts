@@ -4,22 +4,14 @@ import MatchModel from '../database/models/MatchModel';
 import TeamModel from '../database/models/TeamModel';
 import ITeam from '../interface/ITeam';
 import HomeMatch from '../interface/CalculeHomeMatch';
-import AwayMatch from '../interface/CalculeAwayMatch';
 import LeaderBoardTeam from '../interface/LeaderBoardTeam';
 
-class LeaderBoardService {
+class leaderBoardServiceHome {
   public model = MatchModel;
 
   public HMatches = async (id: number): Promise<Match[]> => {
     const Matches = await MatchModel.findAll({
       where: { homeTeam: id, inProgress: false },
-    });
-    return Matches as unknown as Match[];
-  };
-
-  public AMatches = async (id: number): Promise<Match[]> => {
-    const Matches = await MatchModel.findAll({
-      where: { awayTeam: id, inProgress: false },
     });
     return Matches as unknown as Match[];
   };
@@ -60,50 +52,6 @@ class LeaderBoardService {
       if (match.homeTeamGoals === match.awayTeamGoals) return acc + 1;
       return acc;
     }, 0);
-    return total;
-  };
-
-  public AwayTotalGames = async (matches: Match[]): Promise<number> => {
-    const total = matches.length;
-    return total;
-  };
-
-  public AwayGoalsInMatches = async (matches: Match[]): Promise<number> => {
-    const total = matches.reduce((acc, match) => acc + match.awayTeamGoals, 0);
-    return total;
-  };
-
-  public AwayGoalsAgainst = async (matches: Match[]): Promise<number> => {
-    const total = matches.reduce((acc, match) => acc + match.homeTeamGoals, 0);
-    return total;
-  };
-
-  public AwayWins = async (matches: Match[]): Promise<number> => {
-    const total = matches.filter((match) => match.awayTeamGoals > match.homeTeamGoals).length;
-    return total;
-  };
-
-  public AwayDraws = async (matches: Match[]): Promise<number> => {
-    const total = matches.filter((match) => match.awayTeamGoals === match.homeTeamGoals).length;
-    return total;
-  };
-
-  public AwayLosses = async (matches: Match[]): Promise<number> => {
-    const total = matches.filter((match) => match.awayTeamGoals < match.homeTeamGoals).length;
-    return total;
-  };
-
-  public AwayPoints = async (matches: Match[]): Promise<number> => {
-    const total = matches.reduce((acc, match) => {
-      if (match.awayTeamGoals > match.homeTeamGoals) return acc + 3;
-      if (match.awayTeamGoals === match.homeTeamGoals) return acc + 1;
-      return acc;
-    }, 0);
-    return total;
-  };
-
-  public TotalGames = async (home: number, away: number): Promise<number> => {
-    const total = home + away;
     return total;
   };
 
@@ -161,44 +109,18 @@ class LeaderBoardService {
       homePoints };
   };
 
-  public CalculeAway = async (team: ITeam): Promise<AwayMatch> => {
-    const aMatches = await this.AMatches(team.id);
-    const awayTotalGames = await this.AwayTotalGames(aMatches);
-    const aGlsInMatch = await this.AwayGoalsInMatches(aMatches);
-    const awayGoalsAgainst = await this.AwayGoalsAgainst(aMatches);
-    const awayWins = await this.AwayWins(aMatches);
-    const awayDraws = await this.AwayDraws(aMatches);
-    const awayLosses = await this.AwayLosses(aMatches);
-    const awayPoints = await this.AwayPoints(aMatches);
+  public LeaderBoardTeam = async (home: HomeMatch): Promise<LeaderBoardTeam> => {
+    const goalDifference = await this.GoalDifference(home.hGlsInMatch, home.hGlsAgainst);
     return {
-      awayTotalGames,
-      aGlsInMatch,
-      awayGoalsAgainst,
-      awayWins,
-      awayDraws,
-      awayLosses,
-      awayPoints };
-  };
-
-  public LeaderBoardTeam = async (home: HomeMatch, away:AwayMatch): Promise<LeaderBoardTeam> => {
-    const totalGames = await this.TotalGames(home.hTotalGames, away.awayTotalGames);
-    const goalsInMatches = await this.GoalsInMatches(home.hGlsInMatch, away.aGlsInMatch);
-    const goalsAgainst = await this.GoalsAgainst(home.hGlsAgainst, away.awayGoalsAgainst);
-    const wins = await this.Wins(home.homeWins, away.awayWins);
-    const draws = await this.Draws(home.homeDraws, away.awayDraws);
-    const losses = await this.Losses(home.homeLosses, away.awayLosses);
-    const points = await this.Points(home.homePoints, away.awayPoints);
-    const goalDifference = await this.GoalDifference(goalsInMatches, goalsAgainst);
-    return {
-      totalPoints: points,
-      totalGames,
-      totalVictories: wins,
-      totalDraws: draws,
-      totalLosses: losses,
-      goalsFavor: goalsInMatches,
-      goalsOwn: goalsAgainst,
+      totalPoints: home.homePoints,
+      totalGames: home.hTotalGames,
+      totalVictories: home.homeWins,
+      totalDraws: home.homeDraws,
+      totalLosses: home.homeLosses,
+      goalsFavor: home.hGlsInMatch,
+      goalsOwn: home.hGlsAgainst,
       goalsBalance: goalDifference,
-      efficiency: `${((points / (totalGames * 3)) * 100).toFixed(2)}` };
+      efficiency: `${((home.homePoints / (home.hTotalGames * 3)) * 100).toFixed(2)}` };
   };
 
   public LeaderBoard = async (): Promise<LeaderBoard[]> => {
@@ -206,14 +128,19 @@ class LeaderBoardService {
     const leaderBoard = await Promise.all(
       teams.map(async (team) => {
         const calculeH = await this.CalculeHome(team) as unknown as Match;
-        const calculeA = await this.CalculeAway(team as ITeam);
-        const Team = await this.LeaderBoardTeam(calculeH as unknown as HomeMatch, calculeA);
+        // const calculeA = await this.CalculeAway(team as ITeam);
+        const Team = await this.LeaderBoardTeam(calculeH as unknown as HomeMatch);
         return {
           name: team.teamName,
           ...Team,
         };
       }),
-    ); return leaderBoard as unknown as LeaderBoard[];
+    ); return leaderBoard.sort((a, b) => b.totalPoints - a.totalPoints
+    || b.totalVictories - a.totalVictories
+    || b.goalsBalance - a.goalsBalance
+    || b.goalsFavor - a.goalsFavor
+    || b.goalsOwn + a.goalsOwn) as unknown as LeaderBoard[];
   };
 }
-export default LeaderBoardService;
+
+export default leaderBoardServiceHome;
