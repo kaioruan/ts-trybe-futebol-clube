@@ -32,6 +32,7 @@ class App {
     this.app.patch('/matches/:id/finish', matchesController.finishMatch);
     this.app.get('/leaderboard', leaderBoardController.getLeaderBoard);
     this.app.get('/leaderboard/home', leaderBoardController.getLeaderBoardHome);
+    this.app.get('/leaderboard/away', leaderBoardController.getLeaderBoardAway);
   }
 
   private config():void {

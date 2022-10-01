@@ -128,7 +128,6 @@ class leaderBoardServiceHome {
     const leaderBoard = await Promise.all(
       teams.map(async (team) => {
         const calculeH = await this.CalculeHome(team) as unknown as Match;
-        // const calculeA = await this.CalculeAway(team as ITeam);
         const Team = await this.LeaderBoardTeam(calculeH as unknown as HomeMatch);
         return {
           name: team.teamName,
