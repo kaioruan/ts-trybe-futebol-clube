@@ -1,4 +1,3 @@
-// import { StatusCodes } from 'http-status-codes';
 import Match from '../interface/Match';
 import MatchModel from '../database/models/MatchModel';
 import TeamModel from '../database/models/TeamModel';

@@ -4,12 +4,14 @@ import LoginController from './controller/UserLogin';
 import LoginValidation from './middlewares/LoginValidation';
 import MatchesController from './controller/MatchesController';
 import TokenValidation from './middlewares/TokenValidation';
+import LeaderBoardController from './controller/LeaderboardController';
 
 const loginController = new LoginController();
 const loginValidation = new LoginValidation();
 const teamsController = new TeamsController();
 const matchesController = new MatchesController();
 const tokenValidation = new TokenValidation();
+const leaderBoardController = new LeaderBoardController();
 class App {
   public app: express.Express;
 
@@ -28,6 +30,7 @@ class App {
     this.app.post('/matches', tokenValidation.validate, matchesController.postMatches);
     this.app.patch('/matches/:id', matchesController.updateMatch);
     this.app.patch('/matches/:id/finish', matchesController.finishMatch);
+    this.app.get('/leaderboard', leaderBoardController.getLeaderBoard);
   }
 
   private config():void {
