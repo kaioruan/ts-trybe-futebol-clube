@@ -55,36 +55,6 @@ class leaderBoardServiceHome {
     return total;
   };
 
-  public GoalsInMatches = async (home: number, away: number): Promise<number> => {
-    const total = home + away;
-    return total;
-  };
-
-  public GoalsAgainst = async (home: number, away: number): Promise<number> => {
-    const total = home + away;
-    return total;
-  };
-
-  public Wins = async (home: number, away: number): Promise<number> => {
-    const total = home + away;
-    return total;
-  };
-
-  public Draws = async (home: number, away: number): Promise<number> => {
-    const total = home + away;
-    return total;
-  };
-
-  public Losses = async (home: number, away: number): Promise<number> => {
-    const total = home + away;
-    return total;
-  };
-
-  public Points = async (home: number, away: number): Promise<number> => {
-    const total = home + away;
-    return total;
-  };
-
   public GoalDifference = async (goalsFor: number, goalsAgainst: number): Promise<number> => {
     const total = goalsFor - goalsAgainst;
     return total;

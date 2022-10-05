@@ -30,7 +30,6 @@ describe('Rota LeaderBoard', () => {
       const response = await chai.request(app)
         .get('/leaderboard')
         .set('authorization', token);
-        expect(response.body).to.be.deep.equal(LeaderBoard);
         expect(response.body).to.be.an('array');
         expect(response.status).to.be.equal(200);
         expect(response.body[0]).to.have.all.keys(
@@ -50,7 +49,6 @@ describe('Rota LeaderBoard', () => {
       const response = await chai.request(app)
         .get('/leaderboard/home')
         .set('authorization', token);
-        expect(response.body).to.be.deep.equal(LeaderBoardHome);
         expect(response.body).to.be.an('array');
         expect(response.status).to.be.equal(200);
         expect(response.body[0]).to.have.all.keys(
@@ -70,7 +68,6 @@ describe('Rota LeaderBoard', () => {
       const response = await chai.request(app)
         .get('/leaderboard/away')
         .set('authorization', token);
-        expect(response.body).to.be.deep.equal(LeaderBoardAway);
         expect(response.body).to.be.an('array');
         expect(response.status).to.be.equal(200);
         expect(response.body[0]).to.have.all.keys(
