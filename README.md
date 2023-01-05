@@ -5,6 +5,9 @@ Esse projeto foi desenvolvido durante o módulo de Backend na Trybe! #vqv
 Aqui você vai encontrar os detalhes de como foi o desenvolvimento do projeto e quais foram os requisitos técnicos necessários para a entrega do desafio.
 
 ---
+# Descrição:
+ 
+ Aplicação fullstack que gera uma classificação de campeonato de futebol, onde é possivel editar confrontos, criar partidas e finaliza-las, além de ter a classificação geral, classificação dos times jogando em casa e classificação dos visitantes.
 
 # Habilidades desenvolvidas
 
