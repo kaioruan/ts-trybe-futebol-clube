@@ -20,7 +20,7 @@ const { expect } = chai;
 describe('Testando a rota Matches', () => { 
   describe('get /matches', () => {
     before(() => {
-      sinon.stub(Match, 'findAll').resolves(MatchesMock as unknown as Match[]);
+      sinon.stub(Match, 'findAll').resolves(MatchesMock as Match[]);
     })
 
     after(() => {
@@ -35,7 +35,7 @@ describe('Testando a rota Matches', () => {
   })
   describe('rota PATCH /matches/:id', () => {
     before(() => {
-      sinon.stub(Match, 'findOne').resolves(MatchesMock[0] as unknown as Match);
+      sinon.stub(Match, 'findOne').resolves(MatchesMock[0] as Match);
     })
 
     after(() => {
@@ -51,7 +51,7 @@ describe('Testando a rota Matches', () => {
   })
   describe('Utilizando a query ?inProgress=true', () => {
     before(() => {
-      sinon.stub(Match, 'findAll').resolves(MatchesMock as unknown as Match[]);
+      sinon.stub(Match, 'findAll').resolves(MatchesMock as Match[]);
     })
 
     after(() => {
@@ -76,7 +76,7 @@ describe('Testando a rota Matches', () => {
   })
   describe('rota POST /matches', () => {
     before(() => {
-      sinon.stub(Match, 'create').resolves(MatchesMock as unknown as Match);
+      sinon.stub(Match, 'create').resolves(MatchesMock[0] as Match);
     })
 
     after(() => {

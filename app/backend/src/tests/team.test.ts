@@ -14,7 +14,7 @@ const { expect } = chai;
 describe('Testando a rota Teams', () => {
   describe('get /teams', () => {
     before(() => {
-      sinon.stub(Team, 'findAll').resolves(TeamsMock as unknown as Team[]);
+      sinon.stub(Team, 'findAll').resolves(TeamsMock as Team[]);
     })
 
     after(() => {
@@ -29,7 +29,7 @@ describe('Testando a rota Teams', () => {
   })
   describe('get /teams/:id', () => {
     before(() => {
-      sinon.stub(Team, 'findOne').resolves(TeamsMock[0] as unknown as Team);
+      sinon.stub(Team, 'findOne').resolves(TeamsMock[0] as Team);
     })
 
     after(() => {

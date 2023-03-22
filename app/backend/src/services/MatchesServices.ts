@@ -21,7 +21,7 @@ class TeamService {
         },
       ],
     });
-    return Matches as unknown as Match[];
+    return Matches as Match[];
   };
 
   public getBySearch = async (q: boolean): Promise<Match[]> => {
@@ -39,7 +39,7 @@ class TeamService {
         },
       ],
     });
-    return Matches as unknown as Match[];
+    return Matches as Match[];
   };
 
   public postMatches = async (body: postMatch): Promise<Match | string> => {
@@ -51,7 +51,7 @@ class TeamService {
     const newMatch = await this.model.create({ ...body, inProgress: true });
     if (!newMatch) return null as unknown as Match;
     const { id, homeTeam, homeTeamGoals, awayTeam, awayTeamGoals, inProgress } = newMatch;
-    return { id, homeTeam, homeTeamGoals, awayTeam, awayTeamGoals, inProgress } as unknown as Match;
+    return { id, homeTeam, homeTeamGoals, awayTeam, awayTeamGoals, inProgress } as Match;
   };
 
   public finishMatch = async (id: string): Promise<void> => {
