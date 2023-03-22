@@ -1,5 +1,4 @@
 interface LeaderBoard {
-  name: string,
   totalPoints: number,
   totalGames: number,
   totalVictories: number,
@@ -8,6 +7,7 @@ interface LeaderBoard {
   goalsFavor: number,
   goalsOwn: number,
   goalsBalance: number,
-  efficiency: number
+  efficiency: string,
+  name: string
 }
 export default LeaderBoard;

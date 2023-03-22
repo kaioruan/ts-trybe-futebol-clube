@@ -13,7 +13,7 @@ class LeaderBoardServiceAway {
     const Matches = await MatchModel.findAll({
       where: { awayTeam: id, inProgress: false },
     });
-    return Matches as unknown as Match[];
+    return Matches as Match[];
   };
 
   public AwayTotalGames = async (matches: Match[]): Promise<number> => {
@@ -108,7 +108,7 @@ class LeaderBoardServiceAway {
     || b.totalVictories - a.totalVictories
     || b.goalsBalance - a.goalsBalance
     || b.goalsFavor - a.goalsFavor
-    || b.goalsOwn + a.goalsOwn) as unknown as LeaderBoard[];
+    || b.goalsOwn + a.goalsOwn) as LeaderBoard[];
   };
 }
 export default LeaderBoardServiceAway;

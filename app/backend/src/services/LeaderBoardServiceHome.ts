@@ -13,12 +13,7 @@ class leaderBoardServiceHome {
     const Matches = await MatchModel.findAll({
       where: { homeTeam: id, inProgress: false },
     });
-    return Matches as unknown as Match[];
-  };
-
-  public HTotalGames = async (matches: Match[]): Promise<number> => {
-    const total = matches.length;
-    return total;
+    return Matches as Match[];
   };
 
   public HGoalsInMatches = async (matches: Match[]): Promise<number> => {
@@ -55,14 +50,9 @@ class leaderBoardServiceHome {
     return total;
   };
 
-  public GoalDifference = async (goalsFor: number, goalsAgainst: number): Promise<number> => {
-    const total = goalsFor - goalsAgainst;
-    return total;
-  };
-
   public CalculeHome = async (team: ITeam): Promise<HomeMatch> => {
     const HMatches = await this.HMatches(team.id);
-    const hTotalGames = await this.HTotalGames(HMatches);
+    const hTotalGames = HMatches.length;
     const hGlsInMatch = await this.HGoalsInMatches(HMatches);
     const hGlsAgainst = await this.HomeGoalsAgainst(HMatches);
     const homeWins = await this.HomeWins(HMatches);
@@ -80,7 +70,7 @@ class leaderBoardServiceHome {
   };
 
   public LeaderBoardTeam = async (home: HomeMatch): Promise<LeaderBoardTeam> => {
-    const goalDifference = await this.GoalDifference(home.hGlsInMatch, home.hGlsAgainst);
+    const goalDifference = home.hGlsInMatch - home.hGlsAgainst;
     return {
       totalPoints: home.homePoints,
       totalGames: home.hTotalGames,
@@ -97,8 +87,8 @@ class leaderBoardServiceHome {
     const teams = await TeamModel.findAll();
     const leaderBoard = await Promise.all(
       teams.map(async (team) => {
-        const calculeH = await this.CalculeHome(team) as unknown as Match;
-        const Team = await this.LeaderBoardTeam(calculeH as unknown as HomeMatch);
+        const calculeH = await this.CalculeHome(team);
+        const Team = await this.LeaderBoardTeam(calculeH as HomeMatch);
         return {
           name: team.teamName,
           ...Team,
@@ -108,7 +98,7 @@ class leaderBoardServiceHome {
     || b.totalVictories - a.totalVictories
     || b.goalsBalance - a.goalsBalance
     || b.goalsFavor - a.goalsFavor
-    || b.goalsOwn + a.goalsOwn) as unknown as LeaderBoard[];
+    || b.goalsOwn + a.goalsOwn) as LeaderBoard[];
   };
 }
 

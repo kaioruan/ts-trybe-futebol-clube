@@ -20,7 +20,7 @@ const leaderBoardServiceAway = new LeaderBoardServiceAway();
 describe('Rota LeaderBoard', () => {
   describe('Rota /leaderboard', () => {
     before(async () => {
-      sinon.stub(leaderBoardService, 'LeaderBoard').resolves(LeaderBoard as unknown as ILeaderBoard[]);
+      sinon.stub(leaderBoardService, 'LeaderBoard').resolves(LeaderBoard as ILeaderBoard[]);
     })
 
     after(() => {
@@ -39,7 +39,7 @@ describe('Rota LeaderBoard', () => {
   })
   describe('Rota /leaderboard/home', () => {
     before(async () => {
-      sinon.stub(leaderBoardServiceHome, 'LeaderBoard').resolves(LeaderBoardHome as unknown as ILeaderBoard[]);
+      sinon.stub(leaderBoardServiceHome, 'LeaderBoard').resolves(LeaderBoardHome as ILeaderBoard[]);
     })
 
     after(() => {
@@ -58,7 +58,7 @@ describe('Rota LeaderBoard', () => {
   })
   describe('Rota /leaderboard/away', () => {
     before(async () => {
-      sinon.stub(leaderBoardServiceAway, 'LeaderBoard').resolves(LeaderBoardAway as unknown as ILeaderBoard[]);
+      sinon.stub(leaderBoardServiceAway, 'LeaderBoard').resolves(LeaderBoardAway as ILeaderBoard[]);
     })
 
     after(() => {
