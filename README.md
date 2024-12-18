@@ -74,7 +74,7 @@ Para rodar está aplicação é necessário ter **Git**, **Docker**, **Node** e 
 ### 1 - Clone o repositório e entre na pasta do projeto
 
 ```
-git clone git@github.com:kaioruan/ts-trybe-futebol-clube.git && cd trybe-futebol-clube
+git clone git@github.com:kaioruan/ts-trybe-futebol-clube.git && cd ts-trybe-futebol-clube
 ```
 
 ### 2 - Execute o comando para criação dos containers do Docker
